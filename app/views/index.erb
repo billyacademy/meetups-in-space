@@ -1,1 +1,15 @@
 <h1><%= @title %></h1>
+<html>
+<head>
+
+  <h1><%= @title %></h1>
+</head>
+<body>
+  Here is a list of all of the meetups!
+
+
+  <% @meetups.each do |meetup| %>
+  <li><a href='/meetups/<%= meetup.id %>'><%= "#{meetup.name}"  %><a></li>
+  <% end %>
+</body>
+</html>
