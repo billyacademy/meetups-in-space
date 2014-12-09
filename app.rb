@@ -30,12 +30,18 @@ def authenticate!
 end
 
 get '/' do
+  redirect '/meetups'
+end
+
+get '/meetups' do
   @meetups = Meetup.all
   erb :index
 end
 
 get '/meetups/:id' do
   @meetups = Meetup.find(params[:id])
+  @users = User.all
+  @rsvps = Rsvp.where(meetup_id: params[:id])
     erb :meetups
 end
 
@@ -43,6 +49,17 @@ get '/new_meetup' do
   @meetups = Meetup.all
   erb :new_meetup
 end
+
+post '/meetups/:id' do
+@user_id = current_user[:id]
+@meetup_id = params[:id]
+@meetups = Meetup.find(params[:id])
+
+Rsvp.create(user_id: @user_id, meetup_id: @meetup_id)
+flash[:notice] = "You have successfully joined the meetup: " + @meetups[:name] + "!"
+redirect "/meetups/#{@meetup_id}"
+end
+
 
 
 post '/new_meetup' do

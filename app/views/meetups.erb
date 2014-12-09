@@ -7,7 +7,23 @@ Here is a list of all of the meetups!
 <li>Location: <%= @meetups.location %></li>
 
    <% if signed_in? %>
-      <ul><button type='submit'>Join this Meetup</button></ul>
-      <% else %>
+      <form method='POST'>
+        <ul><button type='submit'>Join this Meetup</button></ul>
+    <% else %>
       <a href="/auth/github"><button type='submit'>Sign in to join this meetup</button></ul></a>
-<% end %>
+    <% end %>
+      </form>
+
+
+
+      <h1> Users already signed up for this meetup : </h1>
+
+        <% @rsvps.each do |rsvp| %>
+          <% if @users.each do |user| %>
+            <% if rsvp[:user_id] == (user[:id]) %>
+              <li><%= user[:username] %>
+              <img src=<%= "#{user[:avatar_url]}"%>></li>
+              <% end %>
+          <% end %>
+        <% end %>
+      <% end %>

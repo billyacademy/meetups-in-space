@@ -1,5 +1,5 @@
 class Meetup < ActiveRecord::Base
-
+  has_many :rsvps
 
   validates :name,
   presence: true
