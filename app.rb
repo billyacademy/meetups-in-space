@@ -39,9 +39,25 @@ get '/meetups/:id' do
     erb :meetups
 end
 
-post '/' do
-  @meetup = Meetup.create(params)
-redirect '/'
+get '/new_meetup' do
+  @meetups = Meetup.all
+  erb :new_meetup
+end
+
+
+post '/new_meetup' do
+  @name = params[:name]
+  @description = params[:description]
+  @location = params[:location]
+  @all = Meetup.create(name: @name, description: @description, location: @location)
+
+  if @name.empty? || @description.empty? || @location.empty?
+    flash[:notice] = 'Nahhhh'
+    redirect "/new_meetup"
+  else
+    flash[:notice] = 'You have successfully posted a new meetup!'
+    redirect "/meetups/#{@all[:id]}"
+  end
 
 end
 
