@@ -11,11 +11,11 @@
 
 <div class="top-bar">
   <div class="container">
-    <a class="logo" href="/">Meetups in Space</a> |
-    <a class="logo" href="/new_meetup">Create a Meetup</a>
+    <a class="logo" href="/">Meetups in Space</a>
     <ul class="top-bar-section">
       <% if signed_in? %>
-        <li>Signed in as <%= current_user.username %></a></li>
+    <a class="logo" href="/new_meetup">Create a Meetup</a> |
+        <li>Signed in as <%= current_user.username %></a></li> |
         <li><a href="/sign_out">Sign out</a></li>
       <% else %>
         <li><a href="/auth/github">Sign in</a></li>

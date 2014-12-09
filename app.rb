@@ -52,7 +52,7 @@ post '/new_meetup' do
   @all = Meetup.create(name: @name, description: @description, location: @location)
 
   if @name.empty? || @description.empty? || @location.empty?
-    flash[:notice] = 'Nahhhh'
+    flash[:notice] = 'All fields must be populated to create a meetup.'
     redirect "/new_meetup"
   else
     flash[:notice] = 'You have successfully posted a new meetup!'
