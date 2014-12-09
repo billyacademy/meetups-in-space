@@ -39,6 +39,12 @@ get '/meetups/:id' do
     erb :meetups
 end
 
+post '/' do
+  @meetup = Meetup.create(params)
+redirect '/'
+
+end
+
 
 get '/auth/github/callback' do
   auth = env['omniauth.auth']
