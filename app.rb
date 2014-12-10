@@ -57,10 +57,7 @@ post '/meetups/:id' do
   @meetup_id = params[:id]
   @meetup = Meetup.find(@meetup_id)
   rsvp = Rsvp.create(user_id: @user_id, meetup_id: @meetup.id)
-
-
-    #flash[:notice] = "You have successfully joined the meetup: " + @meetups[:name] + "!"
-
+  flash[:notice] = "You have successfully joined the meetup!"
     redirect "/meetups/#{@meetup_id}"
 end
 
