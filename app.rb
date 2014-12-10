@@ -39,9 +39,11 @@ get '/meetups' do
 end
 
 get '/meetups/:id' do
+
   @meetups = Meetup.find(params[:id])
   @users = User.all
   @rsvps = Rsvp.where(meetup_id: params[:id])
+  @current_user_rsvp_list = Rsvp.find_by(user_id: current_user, meetup_id: params[:id])
     erb :meetups
 end
 
@@ -51,15 +53,25 @@ get '/new_meetup' do
 end
 
 post '/meetups/:id' do
-@user_id = current_user[:id]
-@meetup_id = params[:id]
-@meetups = Meetup.find(params[:id])
+  @user_id = current_user.id
+  @meetup_id = params[:id]
+  @meetup = Meetup.find(@meetup_id)
+  rsvp = Rsvp.create(user_id: @user_id, meetup_id: @meetup.id)
 
-Rsvp.create(user_id: @user_id, meetup_id: @meetup_id)
-flash[:notice] = "You have successfully joined the meetup: " + @meetups[:name] + "!"
-redirect "/meetups/#{@meetup_id}"
+
+    #flash[:notice] = "You have successfully joined the meetup: " + @meetups[:name] + "!"
+
+    redirect "/meetups/#{@meetup_id}"
 end
 
+post '/leave_meetup' do
+  @user_id = current_user[:id]
+  @meetup_id = params[:meetup]
+  @current_user_rsvp_list = Rsvp.find_by(user_id: @user_id, meetup_id: @meetup_id)
+  @current_user_rsvp_list.destroy
+  flash[:notice] = "You have successfully left the meetup!"
+  redirect "/meetups/#{@meetup_id}"
+end
 
 
 post '/new_meetup' do

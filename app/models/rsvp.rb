@@ -1,12 +1,12 @@
 class Rsvp < ActiveRecord::Base
-
-  belongs_to :users
-  belongs_to :meetups
+  validates_uniqueness_of :meetup_id
+  belongs_to :user
+  belongs_to :meetup
 
   validates :user_id,
-  presence: true
+    presence: true
 
   validates :meetup_id,
-  presence: true
+    presence: true
 
 end
